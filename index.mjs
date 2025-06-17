@@ -6,8 +6,8 @@ import random from "random";
 const path = "./data.json";
 const git = simpleGit();
 
-const startDate = moment("2022-01-01");
-const endDate = moment("2022-12-31");
+const startDate = moment("2023-01-01");
+const endDate = moment("2023-12-31");
 const totalDays = endDate.diff(startDate, "days") + 1;
 
 const usedDays = new Set();
@@ -25,19 +25,18 @@ const pickDays = (count) => {
   return [...days];
 };
 
-// Step 1: Pick days per level
-const daysLow = pickDays(100).map(day => ({ dayOffset: day, count: 1 }));
+// Step 1: Assign commit levels
+const daysLow = pickDays(80).map(day => ({ dayOffset: day, count: 1 }));
 const daysMedium = pickDays(30).map(day => ({ dayOffset: day, count: random.int(2, 3) }));
-const daysHigh = pickDays(25).map(day => ({ dayOffset: day, count: random.int(4, 6) }));
-const daysVeryHigh = pickDays(10).map(day => ({ dayOffset: day, count: random.int(7, 12) }));
+const daysHigh = pickDays(30).map(day => ({ dayOffset: day, count: random.int(4, 6) }));
+const daysVeryHigh = pickDays(15).map(day => ({ dayOffset: day, count: random.int(7, 12) }));
 
-// Step 2: Combine all commit days
 const allCommitDays = [...daysLow, ...daysMedium, ...daysHigh, ...daysVeryHigh];
 
-// Step 3: Sort chronologically
+// Sort chronologically
 allCommitDays.sort((a, b) => a.dayOffset - b.dayOffset);
 
-// Step 4: Commit recursively
+// Commit loop
 const makeCommits = async (dayIndex = 0, commitIndex = 0) => {
   if (dayIndex >= allCommitDays.length) {
     console.log("✅ All commits created.");
@@ -60,10 +59,9 @@ const makeCommits = async (dayIndex = 0, commitIndex = 0) => {
     if (commitIndex + 1 < count) {
       makeCommits(dayIndex, commitIndex + 1); // same day, next commit
     } else {
-      makeCommits(dayIndex + 1, 0); // next day
+      makeCommits(dayIndex + 1, 0); // move to next day
     }
   });
 };
 
 makeCommits();
-
