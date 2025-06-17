@@ -6,8 +6,8 @@ import random from "random";
 const path = "./data.json";
 const git = simpleGit();
 
-const startDate = moment("2024-01-01");
-const endDate = moment("2024-12-31");
+const startDate = moment("2025-01-01");
+const endDate = moment("2025-06-17");
 const totalDays = endDate.diff(startDate, "days") + 1;
 
 const usedDays = new Set();
@@ -26,7 +26,7 @@ const pickDays = (count) => {
 };
 
 // Step 1: Assign commit levels
-const daysLow = pickDays(60).map(day => ({ dayOffset: day, count: 1 }));
+const daysLow = pickDays(70).map(day => ({ dayOffset: day, count: 1 }));
 const daysMedium = pickDays(20).map(day => ({ dayOffset: day, count: random.int(2, 3) }));
 const daysHigh = pickDays(15).map(day => ({ dayOffset: day, count: random.int(4, 6) }));
 const daysVeryHigh = pickDays(5).map(day => ({ dayOffset: day, count: random.int(7, 12) }));
