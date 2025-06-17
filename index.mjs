@@ -64,4 +64,5 @@ const makeCommits = async (dayIndex = 0, commitIndex = 0) => {
   });
 };
 
+
 makeCommits();
